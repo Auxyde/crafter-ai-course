@@ -1,6 +1,7 @@
 import argparse
 
 import crafter
+import numpy as np
 import tqdm
 
 parser = argparse.ArgumentParser()
@@ -16,6 +17,7 @@ env = crafter.Recorder(
     save_video=False,
 )
 action_space = env.action_space
+random = np.random.RandomState()
 
 done = True
 step = 0
@@ -24,6 +26,6 @@ while step < args.steps or not done:
   if done:
     env.reset()
     done = False
-  _, _, done, _ = env.step(action_space.sample())
+  _, _, done, _ = env.step(random.randint(0, action_space.n))
   step += 1
   bar.update(1)
